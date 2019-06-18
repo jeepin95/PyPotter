@@ -25,12 +25,22 @@ class HassApi:
         response = requests.post(url, data=json.dumps(payload), headers=headers)
         print(response.text)
 
-    def TurnOnLight(self, name, color):
+    def TurnOnLight(self, name, color="White", transition=1, brightness=225):
         url = self.url + "/api/services/light/turn_on"
         headers = {
             'Authorization': "Bearer " + self.token,
         }
-        payload = {"entity_id": name, "color_name": color}
+        payload = {"entity_id": name, "color_name":color, "transition":transition, "brightness":brightness}
+        response = requests.post(url, data=json.dumps(payload), headers=headers)
+        print(response.text)
+
+    def TurnOffLight(self, name, transition=2):
+        url = self.url + "/api/services/light/turn_off"
+        headers = {
+            'Authorization': "Bearer " + self.token,
+        }
+        payload = {"entity_id": name, "transition":transition}
+
         response = requests.post(url, data=json.dumps(payload), headers=headers)
         print(response.text)
 
